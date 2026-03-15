@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Anti-Gravity Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars-parallax"></div>
+    <div class="cosmos-bg"></div>
+    
+    <div class="mobile-frame">
+        <header class="app-header">
+            <div class="status-bar">
+                <span>9:41</span>
+                <div class="status-icons">
+                    <span class="icon">📶</span>
+                    <span class="icon">🔋</span>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="avatar-glow">
+                    <div class="avatar"></div>
+                </div>
+                <div class="details">
+                    <h1>Nova Explorer</h1>
+                    <p>Relativity Sector 7</p>
+                </div>
+                <div class="actions">
+                    <button class="icon-btn">📞</button>
+                    <button class="icon-btn">⚙️</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="chat-area" id="chatArea">
+            <!-- Messages will be injected here -->
+            <div class="message bubble-purple drift-1">
+                <div class="bubble-content">Approaching the event horizon. Gravity seems to be... missing?</div>
+            </div>
+            <div class="message bubble-blue drift-2 sender">
+                <div class="bubble-content">Copy that. Engaging anti-gravity stabilizers. How's the view?</div>
+            </div>
+            <div class="message bubble-purple drift-3">
+                <div class="bubble-content">Stunning. The nebulae are swirling like liquid sapphire. ✨</div>
+            </div>
+        </main>
+
+        <footer class="input-area">
+            <div class="frosted-glass">
+                <button class="attach-btn">+</button>
+                <input type="text" id="nextMessage" placeholder="Transmit message..." autocomplete="off">
+                <button class="send-btn" id="sendBtn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
