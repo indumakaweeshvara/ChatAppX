@@ -39,6 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
             createMessage(text, true);
             input.value = '';
             
+            // Update XP
+            const xpBar = document.getElementById('xpProgress');
+            let currentWidth = parseFloat(xpBar.style.width);
+            if (currentWidth < 95) {
+                currentWidth += 5;
+                xpBar.style.width = currentWidth + '%';
+            }
+
             // Simulate reply
             setTimeout(() => {
                 const replies = [

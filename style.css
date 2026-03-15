@@ -71,25 +71,74 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* Header */
+/* Header & Gamification */
 .app-header {
-    padding: 15px 25px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
-    z-index: 10;
+    padding: 10px 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+    z-index: 20;
 }
 
-.status-bar {
+.gamification-stats {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    margin-bottom: 15px;
-    opacity: 0.7;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+.xp-container {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.xp-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--blue-main);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.xp-label .rank {
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+.xp-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.xp-progress {
+    height: 100%;
+    background: linear-gradient(to right, var(--blue-main), var(--purple-main));
+    box-shadow: 0 0 10px var(--blue-main);
+    transition: width 0.5s ease-out;
+}
+
+.streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 69, 0, 0.1);
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 69, 0, 0.2);
+}
+
+.fire-icon { font-size: 14px; }
+.streak-count { font-size: 12px; font-weight: 700; color: #ff4500; }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .avatar-glow {
@@ -133,6 +182,86 @@ body {
     font-size: 18px;
     cursor: pointer;
     opacity: 0.7;
+}
+
+/* Video Call Window */
+.video-call-window {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    width: 110px;
+    height: 160px;
+    background: rgba(20, 20, 25, 0.6);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    z-index: 5;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.video-overlay {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: radial-gradient(circle at center, rgba(0, 242, 255, 0.05), transparent);
+}
+
+.pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--blue-main);
+    border-radius: 50%;
+    animation: spatialPulse 2s infinite;
+}
+
+@keyframes spatialPulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+}
+
+.call-time {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-dim);
+}
+
+.call-controls {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.call-btn.end {
+    background: #ff3b30;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(135deg);
+}
+
+.floating {
+    animation: floatCall 4s ease-in-out infinite;
+}
+
+@keyframes floatCall {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 /* Chat Area */
@@ -225,14 +354,42 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.attach-btn {
-    background: none;
-    border: none;
-    color: var(--blue-main);
-    font-size: 24px;
+/* AI Co-pilot */
+.ai-copilot {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
+.ai-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--blue-main);
+    z-index: 2;
+}
+
+.ai-orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed var(--blue-main);
+    border-radius: 50%;
+    animation: rotate 4s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.ai-copilot:hover .ai-icon {
+    filter: drop-shadow(0 0 8px var(--blue-main));
+}
 input {
     flex: 1;
     background: transparent;

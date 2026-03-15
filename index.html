@@ -22,6 +22,21 @@
                     <span class="icon">🔋</span>
                 </div>
             </div>
+
+            <!-- Gamification Header -->
+            <div class="gamification-stats">
+                <div class="xp-container">
+                    <div class="xp-label">LVL 42 <span class="rank">ELITE</span></div>
+                    <div class="xp-bar">
+                        <div class="xp-progress" id="xpProgress" style="width: 65%;"></div>
+                    </div>
+                </div>
+                <div class="streak-badge">
+                    <span class="fire-icon">🔥</span>
+                    <span class="streak-count" id="streakCount">14</span>
+                </div>
+            </div>
+
             <div class="user-info">
                 <div class="avatar-glow">
                     <div class="avatar"></div>
@@ -38,6 +53,17 @@
         </header>
 
         <main class="chat-area" id="chatArea">
+            <!-- Floating Video Call -->
+            <div class="video-call-window floating">
+                <div class="video-overlay">
+                    <div class="pulse"></div>
+                    <span class="call-time">04:12</span>
+                </div>
+                <div class="call-controls">
+                    <button class="call-btn end">📞</button>
+                </div>
+            </div>
+
             <!-- Messages will be injected here -->
             <div class="message bubble-purple drift-1">
                 <div class="bubble-content">Approaching the event horizon. Gravity seems to be... missing?</div>
@@ -54,6 +80,12 @@
             <div class="frosted-glass">
                 <button class="attach-btn">+</button>
                 <input type="text" id="nextMessage" placeholder="Transmit message..." autocomplete="off">
+                <div class="ai-copilot" id="aiCopilot" title="AI Co-pilot active">
+                    <div class="ai-orbit"></div>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ai-icon">
+                        <path d="M12 2L14.85 8.15L21.5 9.4L16.85 14.35L17.75 21L12 18.15L6.25 21L7.15 14.35L2.5 9.4L9.15 8.15L12 2Z" fill="currentColor"/>
+                    </svg>
+                </div>
                 <button class="send-btn" id="sendBtn">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
