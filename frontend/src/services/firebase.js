@@ -1,15 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// These should ideally be in a .env file
+// Real Firebase configuration provided by the user
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBI-Gnlm1DGgnUl8Y9Sl-d1AZIXeb0Stgo",
+  authDomain: "chatappx-508f8.firebaseapp.com",
+  projectId: "chatappx-508f8",
+  storageBucket: "chatappx-508f8.firebasestorage.app",
+  messagingSenderId: "683036303622",
+  appId: "1:683036303622:web:a168587a4fa7237143fe87",
+  measurementId: "G-3DY8FSXBDD"
 };
 
 // Initialize Firebase

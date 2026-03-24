@@ -4,6 +4,11 @@ const chatController = require('../controllers/chatController');
 const userController = require('../controllers/userController');
 
 const aiController = require('../controllers/aiController');
+const authController = require('../controllers/authController');
+
+// Auth routes
+router.post('/auth/send-otp', authController.sendOTP);
+router.post('/auth/verify-otp', authController.verifyOTP);
 
 // Chat routes
 router.get('/messages/:roomId', chatController.getMessages);
