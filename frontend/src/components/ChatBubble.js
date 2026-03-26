@@ -7,11 +7,21 @@ import Animated, {
   withTiming, 
   withSequence,
   withDelay,
-  Easing
+  Easing,
+  FadeIn
 } from 'react-native-reanimated';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import { Check, CheckCheck, PlayCircle, MapPin } from 'lucide-react-native';
+import { Check, CheckCheck, PlayCircle, MapPin, Star, Zap, Flame, Moon, Rocket } from 'lucide-react-native';
 import { theme } from '../theme';
+
+const REACTION_ICONS = {
+  star: Star,
+  zap: Zap,
+  flame: Flame,
+  moon: Moon,
+  rocket: Rocket,
+};
 
 const BubbleContainer = styled(Animated.View)`
   padding: 12px 16px;
@@ -88,7 +98,19 @@ const MapOverlay = styled.View`
   border-radius: 10px;
 `;
 
-export const ChatBubble = ({ text, type, index, totalMessages = 10, status, timestamp, media }) => {
+const ReactionBadge = styled(Animated.View)`
+  position: absolute;
+  bottom: -15px;
+  right: -5px;
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 12px;
+  flex-direction: row;
+  padding: 2px 6px;
+  border-width: 1px;
+  border-color: rgba(255,255,255,0.2);
+`;
+
+export const ChatBubble = ({ text, type, index, totalMessages = 10, status, timestamp, media, reactions = [], onLongPress }) => {
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -138,7 +160,12 @@ export const ChatBubble = ({ text, type, index, totalMessages = 10, status, time
   const Bubble = type === 'sender' ? BlueBubble : PurpleBubble;
 
   return (
-    <Bubble style={animatedStyle}>
+    <Bubble 
+      as={TouchableOpacity}
+      activeOpacity={0.9}
+      onLongPress={() => onLongPress && onLongPress()}
+      style={animatedStyle}
+    >
       {media && media.type === 'video' && (
         <MediaWrapper>
           <MediaImage source={{ uri: media.url || 'https://via.placeholder.com/300x200/2a1a4a/ffffff?text=Room+Tour' }} />
@@ -164,6 +191,15 @@ export const ChatBubble = ({ text, type, index, totalMessages = 10, status, time
         {type === 'sender' && status === 'sent' && <Check size={12} color="rgba(255,255,255,0.4)" />}
         {type === 'sender' && status === 'read' && <CheckCheck size={14} color="#00F2FF" />}
       </MetaContainer>
+
+      {reactions.length > 0 && (
+        <ReactionBadge entering={FadeIn.springify()}>
+          {reactions.map((r, i) => {
+             const Icon = REACTION_ICONS[r] || Star;
+             return <Icon key={i} size={10} color="#fff" style={{ marginHorizontal: 1 }} />;
+          })}
+        </ReactionBadge>
+      )}
     </Bubble>
   );
 };

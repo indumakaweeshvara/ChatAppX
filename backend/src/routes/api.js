@@ -20,6 +20,7 @@ router.post('/ai/analyze', async (req, res) => {
 });
 
 // User/Gamification routes
+router.get('/user/search', userController.searchUser);
 router.get('/user/:userId', userController.getUserData);
 
 module.exports = router;

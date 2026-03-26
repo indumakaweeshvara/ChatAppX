@@ -4,8 +4,8 @@ exports.sendOTP = async (req, res) => {
   const { phoneNumber } = req.body;
   if (!phoneNumber) return res.status(400).json({ error: 'Phone number is required' });
 
-  // Generate 6-digit OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  // Fixed 6-digit OTP for demonstration
+  const otp = '123456';
   otps.set(phoneNumber, otp);
 
   // SIMULATION: Log to console so user can see it

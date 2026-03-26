@@ -177,6 +177,27 @@ const PrimaryButton = styled.TouchableOpacity`
   padding: 15px;
   border-radius: 10px;
   align-items: center;
+  margin-top: 10px;
+`;
+
+const MissionCard = styled.View`
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-left-width: 4px;
+  border-left-color: ${props => props.completed ? '#66bb6a' : theme.colors.blueMain};
+`;
+
+const PlanetOption = styled.TouchableOpacity`
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ${props => props.selected ? 'rgba(0, 242, 255, 0.2)' : 'transparent'};
+  border-width: 1px;
+  border-color: ${props => props.selected ? theme.colors.blueMain : 'rgba(255, 255, 255, 0.1)'};
+  margin-right: 10px;
+  align-items: center;
+  width: 70px;
 `;
 
 const USER_ID = 'user-1';
@@ -193,6 +214,14 @@ export const ProfileScreen = ({ navigation }) => {
   const [contacts, setContacts] = useState([
     { id: '1', name: 'Nova Explorer' },
     { id: '2', name: 'Commander Shepard' }
+  ]);
+  
+  const [selectedPlanet, setSelectedPlanet] = useState('earth');
+
+  const [missions] = useState([
+    { id: 1, title: 'First Contact', desc: 'Send your first message', xp: 50, completed: true },
+    { id: 2, title: 'Nebula Navigator', desc: 'Visit 3 different planets', xp: 150, completed: false },
+    { id: 3, title: 'Star Conversationalist', desc: 'Send 100 messages', xp: 500, completed: false },
   ]);
 
   const handleSaveProfile = () => {
@@ -274,6 +303,23 @@ export const ProfileScreen = ({ navigation }) => {
             ))}
           </ContactsSection>
 
+          <ContactsSection>
+            <SectionHeader>
+              <SectionTitle>Mission Log</SectionTitle>
+            </SectionHeader>
+            {missions.map(mission => (
+              <MissionCard key={mission.id} completed={mission.completed}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View>
+                    <Text style={{ color: 'white', fontSize: 14, fontFamily: 'Outfit_600SemiBold' }}>{mission.title}</Text>
+                    <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, fontFamily: 'Outfit_400Regular' }}>{mission.desc}</Text>
+                  </View>
+                  <Text style={{ color: theme.colors.blueMain, fontSize: 14, fontFamily: 'Outfit_600SemiBold' }}>+{mission.xp} XP</Text>
+                </View>
+              </MissionCard>
+            ))}
+          </ContactsSection>
+
         </Container>
 
         {/* Edit Profile Modal */}
@@ -290,6 +336,18 @@ export const ProfileScreen = ({ navigation }) => {
                  value={username}
                  onChangeText={setUsername}
                />
+                <Text style={{ color: 'white', marginBottom: 10, fontFamily: 'Outfit_600SemiBold' }}>Home Orbit Planet</Text>
+                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                  {['earth', 'mars', 'europa', 'saturn'].map(p => (
+                    <PlanetOption 
+                      key={p} 
+                      selected={selectedPlanet === p} 
+                      onPress={() => setSelectedPlanet(p)}
+                    >
+                      <Text style={{ color: 'white', fontSize: 10, textTransform: 'capitalize' }}>{p}</Text>
+                    </PlanetOption>
+                  ))}
+                </View>
                <PrimaryButton onPress={handleSaveProfile}>
                  <Text style={{ color: 'black', fontFamily: 'Outfit_600SemiBold' }}>Save Changes</Text>
                </PrimaryButton>

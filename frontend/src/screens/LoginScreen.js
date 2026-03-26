@@ -5,6 +5,8 @@ import { BlurView } from 'expo-blur';
 import { theme } from '../theme';
 import { Phone, ArrowRight, ShieldCheck, Zap } from 'lucide-react-native';
 import { useAuth } from '../hooks/useAuth';
+import { HyperspaceTransition } from '../components/HyperspaceTransition';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withSequence, withTiming } from 'react-native-reanimated';
 
 export const LoginScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
@@ -12,6 +14,9 @@ export const LoginScreen = ({ navigation }) => {
   const [step, setStep] = useState(1); // 1: Phone, 2: OTP
   const { sendOTP, verifyOTP, loading, user } = useAuth();
   const [error, setError] = useState('');
+  const [showTransition, setShowTransition] = useState(false);
+  
+  const buttonScale = useSharedValue(1);
 
   useEffect(() => {
     if (user) {
@@ -22,7 +27,7 @@ export const LoginScreen = ({ navigation }) => {
   const handleNext = async () => {
     setError('');
     if (step === 1 && phone.length >= 10) {
-      // For real SMS, pass the recaptcha container id
+      buttonScale.value = withSequence(withSpring(1.2), withSpring(1));
       const result = await sendOTP(phone, 'recaptcha-container');
       if (result.success) {
         setStep(2);
@@ -30,14 +35,19 @@ export const LoginScreen = ({ navigation }) => {
         setError(result.error || 'Failed to send OTP. Check your Firebase config.');
       }
     } else if (step === 2 && otp.length === 6) {
+      buttonScale.value = withSequence(withSpring(1.5), withSpring(1.2));
       const result = await verifyOTP(otp);
       if (result.success) {
-        navigation.replace('Chat');
+        setShowTransition(true);
       } else {
         setError(result.error || 'Invalid Code');
       }
     }
   };
+
+  const animatedButtonStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: buttonScale.value }],
+  }));
 
   return (
     <CosmicBackground>
@@ -48,8 +58,8 @@ export const LoginScreen = ({ navigation }) => {
         <View style={styles.content}>
           <View style={styles.header}>
             <Zap color={theme.colors.blueMain} size={48} style={styles.logo} />
-            <Text style={styles.title}>Nova Gateway</Text>
-            <Text style={styles.subtitle}>Enter the luxury space resort network</Text>
+            <Text style={styles.title}>Solaris Gateway</Text>
+            <Text style={styles.subtitle}>Interstellar communication network</Text>
           </View>
 
           <BlurView intensity={30} tint="dark" style={styles.glassCard}>
@@ -88,8 +98,8 @@ export const LoginScreen = ({ navigation }) => {
 
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-            <TouchableOpacity 
-              style={[styles.button, { opacity: loading ? 0.6 : 1 }]} 
+            <Animated.TouchableOpacity 
+              style={[styles.button, { opacity: loading ? 0.6 : 1 }, animatedButtonStyle]} 
               onPress={handleNext}
               disabled={loading}
             >
@@ -97,8 +107,13 @@ export const LoginScreen = ({ navigation }) => {
                 {loading ? 'Transmitting...' : step === 1 ? 'Verify Number' : 'Secure Entrance'}
               </Text>
               {!loading && <ArrowRight size={20} color="#000" />}
-            </TouchableOpacity>
+            </Animated.TouchableOpacity>
           </BlurView>
+
+          <HyperspaceTransition 
+            visible={showTransition} 
+            onAnimationComplete={() => navigation.replace('Chat')} 
+          />
           
           {/* Required for Firebase Web Recaptcha */}
           <View id="recaptcha-container" />

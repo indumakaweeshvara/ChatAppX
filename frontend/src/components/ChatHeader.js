@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { ChevronLeft, Phone, Globe, Star } from 'lucide-react-native';
+import { ChevronLeft, Phone, UserPlus, Star } from 'lucide-react-native';
 import { theme } from '../theme';
 
-export const ChatHeader = ({ onBack, sentiment = 'positive', xp = 1540, level = 42 }) => {
+export const ChatHeader = ({ onBack, onAddFriend, onPressRank, sentiment = 'positive', xp = 1540, level = 42, rank = 'Moon Drifter' }) => {
   const moodColor = sentiment === 'positive' ? '#00FF00' : sentiment === 'negative' ? '#FF3B30' : theme.colors.blueMain;
 
   return (
@@ -14,26 +14,29 @@ export const ChatHeader = ({ onBack, sentiment = 'positive', xp = 1540, level = 
           <ChevronLeft size={24} color="#00F2FF" />
         </TouchableOpacity>
         
-        <View style={styles.userInfo}>
+        <TouchableOpacity style={styles.userInfo} onPress={onPressRank} activeOpacity={0.7}>
           <View style={styles.avatarContainer}>
             <View style={[styles.avatarGlow, { backgroundColor: moodColor, shadowColor: moodColor }]} />
             <View style={[styles.avatar, { borderColor: moodColor }]} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.name}>Nova Explorer</Text>
+            <Text style={styles.name}>{rank}</Text>
             <View style={styles.levelRow}>
               <Star size={10} color="#FFD700" style={{marginRight: 4}} />
               <Text style={styles.status}>LVL {level} • {xp} XP</Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.orbitBtn}>
-            <Globe size={18} color="#FFF" />
-            <Text style={styles.orbitText}>Orbit</Text>
+          <TouchableOpacity style={styles.orbitBtn} onPress={onAddFriend}>
+            <UserPlus size={18} color="#FFF" />
+            <Text style={styles.orbitText}>Search</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconBtn}>
+          <TouchableOpacity 
+            style={styles.iconBtn} 
+            onPress={() => Alert.alert("Voice Canal", "Establishing sub-space audio link... [ENC: 256-BIT]", [{text: "Accept"}])}
+          >
             <Phone size={20} color="#00F2FF" />
           </TouchableOpacity>
         </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Calendar, Coffee, AlertCircle } from 'lucide-react-native';
 
@@ -10,6 +10,14 @@ const shortcuts = [
 ];
 
 export const QuickAccessMenu = () => {
+  const handlePress = (title) => {
+    Alert.alert(
+      "Solaris System",
+      `Initializing link to ${title}... This module is currently in beta.`,
+      [{ text: "Steady", style: "default" }]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -18,7 +26,11 @@ export const QuickAccessMenu = () => {
           const color = item.color || '#00F2FF';
           
           return (
-            <TouchableOpacity key={item.id} style={styles.btnWrapper}>
+            <TouchableOpacity 
+              key={item.id} 
+              style={styles.btnWrapper} 
+              onPress={() => handlePress(item.title)}
+            >
               <BlurView intensity={20} tint="dark" style={styles.glassBtn}>
                 <Icon size={16} color={color} />
                 <Text style={[styles.text, { color }]}>{item.title}</Text>

@@ -25,7 +25,12 @@ const userController = {
 
       const newXP = user.xp + xpGain;
       const newLevel = Math.floor(newXP / 100) + 1;
-      const rank = newLevel > 50 ? 'GALACTIC OVERLORD' : newLevel > 20 ? 'ELITE' : 'NOVICE';
+      
+      let rank = 'Moon Drifter';
+      if (newLevel > 50) rank = 'Solaris Overlord';
+      else if (newLevel > 30) rank = 'Saturn Guardian';
+      else if (newLevel > 15) rank = 'Jupiter Voyager';
+      else if (newLevel > 5) rank = 'Mars Pioneer';
 
       return await prisma.user.update({
         where: { id: userId },
@@ -49,6 +54,28 @@ const userController = {
       res.json(user);
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve user data' });
+    }
+  },
+
+  searchUser: async (req, res) => {
+    try {
+      const { phoneNumber } = req.query;
+      // In a real app, this would use prisma.user.findFirst
+      // For now, we simulate finding a user
+      if (phoneNumber) {
+        res.json({
+          id: 'user-' + phoneNumber.slice(-4),
+          phoneNumber,
+          username: `Mars_Pioneer_${phoneNumber.slice(-4)}`,
+          xp: 210,
+          level: 3,
+          rank: 'Moon Drifter'
+        });
+      } else {
+        res.status(400).json({ error: 'Phone number is required' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Search failed' });
     }
   }
 };

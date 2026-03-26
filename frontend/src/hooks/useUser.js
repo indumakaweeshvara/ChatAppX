@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 // Replace with your backend URL
-const API_URL = 'http://localhost:5000/api';
+// Update this to your public backend URL (e.g. from ngrok)
+const API_URL = 'http://127.0.0.1:5000/api';
 
 export const useUser = (userId) => {
   const [user, setUser] = useState(null);
