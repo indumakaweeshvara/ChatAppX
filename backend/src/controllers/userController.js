@@ -14,12 +14,10 @@ const userController = {
         newStreak = 1;
       } else {
         const diffHours = (now - lastMessageDate) / (1000 * 60 * 60);
-        if (diffHours < 24 && diffHours > 0) {
-          // Same day or within 24h, keep streak or potentially don't increment yet
-        } else if (diffHours >= 24 && diffHours < 48) {
-          newStreak += 1; // New consecutive day
+        if (diffHours >= 24 && diffHours < 48) {
+          newStreak += 1;
         } else if (diffHours >= 48) {
-          newStreak = 1; // Streak broken
+          newStreak = 1;
         }
       }
 
@@ -60,8 +58,6 @@ const userController = {
   searchUser: async (req, res) => {
     try {
       const { phoneNumber } = req.query;
-      // In a real app, this would use prisma.user.findFirst
-      // For now, we simulate finding a user
       if (phoneNumber) {
         res.json({
           id: 'user-' + phoneNumber.slice(-4),
